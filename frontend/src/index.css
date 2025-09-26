@@ -1,0 +1,228 @@
+/* Mobile-first responsive design */
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  /* Vibrant color palette */
+  --skedify-primary: #FF6B6B;
+  --skedify-secondary: #4ECDC4;
+  --skedify-accent: #45B7D1;
+  --skedify-success: #96CEB4;
+  --skedify-warning: #FECA57;
+  --skedify-purple: #BF5AF2;
+  --skedify-pink: #F368E0;
+
+  /* Gradients */
+  --skedify-gradient-main: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 25%, #45B7D1 50%, #96CEB4 75%, #FECA57 100%);
+  --skedify-gradient-purple: linear-gradient(135deg, #FF9FF3 0%, #F368E0 50%, #BF5AF2 100%);
+  --skedify-gradient-ocean: linear-gradient(135deg, #4ECDC4 0%, #45B7D1 100%);
+  --skedify-gradient-sunset: linear-gradient(135deg, #FF6B6B 0%, #FECA57 100%);
+
+  /* Enhanced shadows with color */
+  --skedify-shadow-sm: 0 2px 8px rgba(255, 107, 107, 0.15);
+  --skedify-shadow-md: 0 4px 20px rgba(78, 205, 196, 0.2);
+  --skedify-shadow-lg: 0 8px 32px rgba(69, 183, 209, 0.25);
+  --skedify-shadow-glow: 0 0 20px rgba(191, 90, 242, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #16213e 75%, #1a1a2e 100%);
+  position: relative;
+}
+
+/* Animated background overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 107, 107, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 60% 40%, rgba(191, 90, 242, 0.05) 0%, transparent 50%);
+  animation: floatingBubbles 20s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes floatingBubbles {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(20px, -20px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Mobile touch targets */
+button, [role="button"], input, select, textarea {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Mobile-friendly focus styles */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--skedify-purple);
+  outline-offset: 2px;
+  box-shadow: var(--skedify-shadow-glow);
+}
+
+/* Responsive text sizes */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  button:hover {
+    background-color: initial;
+  }
+}
+
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Skedify component styles */
+.skedify-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+}
+
+.skedify-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.skedify-button-primary {
+  background: var(--skedify-gradient-sunset) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 600 !important;
+  box-shadow: var(--skedify-shadow-sm) !important;
+  transition: all 0.3s ease !important;
+}
+
+.skedify-button-primary:hover {
+  box-shadow: var(--skedify-shadow-md) !important;
+  transform: translateY(-1px) !important;
+}
+
+.skedify-button-secondary {
+  background: var(--skedify-gradient-ocean) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 500 !important;
+  box-shadow: var(--skedify-shadow-sm) !important;
+}
+
+.skedify-badge {
+  background: var(--skedify-gradient-purple) !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: var(--skedify-shadow-sm) !important;
+}
+
+.skedify-input {
+  border: 2px solid transparent !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  transition: all 0.3s ease !important;
+}
+
+.skedify-input:focus {
+  border: 2px solid var(--skedify-accent) !important;
+  box-shadow: var(--skedify-shadow-glow) !important;
+  background: white !important;
+}
+
+.skedify-alert-success {
+  background: linear-gradient(135deg, rgba(150, 206, 180, 0.2), rgba(78, 205, 196, 0.2)) !important;
+  border: 1px solid var(--skedify-success) !important;
+  color: #2d5a4a !important;
+}
+
+.skedify-alert-info {
+  background: linear-gradient(135deg, rgba(69, 183, 209, 0.2), rgba(78, 205, 196, 0.2)) !important;
+  border: 1px solid var(--skedify-accent) !important;
+  color: #2d4a5a !important;
+}
+
+.skedify-time-slot {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.skedify-time-slot:hover {
+  transform: scale(1.05) !important;
+  box-shadow: var(--skedify-shadow-sm) !important;
+}
+
+/* Logo animation */
+.skedify-logo {
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: var(--skedify-gradient-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* Skedify brand text styling */
+.skedify-brand-text {
+  font-family: "Bitcount Prop Double Ink", monospace !important;
+  font-weight: normal !important;
+  letter-spacing: 0.05em;
+}
