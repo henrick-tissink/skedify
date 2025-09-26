@@ -230,9 +230,6 @@ const Dashboard: React.FC = () => {
                         : '0 4px 16px rgba(255, 255, 255, 0.1)'
                     }
                   },
-                  leftSection: {
-                    color: isActive ? 'white' : 'rgba(255, 255, 255, 0.8)'
-                  }
                 }}
               >
                 {item.label}

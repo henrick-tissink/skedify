@@ -45,7 +45,7 @@ const SessionTypeManagement: React.FC = () => {
       name: (value) => (value.length < 1 ? 'Name is required' : null),
       duration_minutes: (value) =>
         !value ? 'Duration is required' : null,
-      description: (value) => null, // Optional field, no validation needed
+      description: () => null, // Optional field, no validation needed
     },
   });
 
