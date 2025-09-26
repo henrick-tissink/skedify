@@ -15,8 +15,8 @@ const PORT = Number(Deno.env.get("PORT")) || Number(env.PORT) || 8000;
 const CORS_ORIGIN = Deno.env.get("CORS_ORIGIN") || env.CORS_ORIGIN || "http://localhost:5173";
 
 app.use(oakCors({
-  origin: CORS_ORIGIN,
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
