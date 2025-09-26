@@ -26,6 +26,7 @@ import { AxiosError } from 'axios';
 interface SessionTypeForm {
   name: string;
   duration_minutes: string;
+  description: string;
 }
 
 const SessionTypeManagement: React.FC = () => {
@@ -38,11 +39,13 @@ const SessionTypeManagement: React.FC = () => {
     initialValues: {
       name: '',
       duration_minutes: '30',
+      description: '',
     },
     validate: {
       name: (value) => (value.length < 1 ? 'Name is required' : null),
       duration_minutes: (value) =>
         !value ? 'Duration is required' : null,
+      description: (value) => null, // Optional field, no validation needed
     },
   });
 
@@ -69,7 +72,8 @@ const SessionTypeManagement: React.FC = () => {
     try {
       const payload = {
         name: values.name,
-        duration_minutes: parseInt(values.duration_minutes, 10)
+        duration_minutes: parseInt(values.duration_minutes, 10),
+        description: values.description
       };
 
       if (editingSession) {
@@ -106,6 +110,7 @@ const SessionTypeManagement: React.FC = () => {
     form.setValues({
       name: sessionType.name,
       duration_minutes: sessionType.duration_minutes.toString(),
+      description: sessionType.description || '',
     });
     open();
   };
@@ -203,6 +208,11 @@ const SessionTypeManagement: React.FC = () => {
                         {sessionType.duration_minutes} min
                       </Badge>
                     </Group>
+                    {sessionType.description && (
+                      <Text size="sm" style={{ color: 'rgba(255, 255, 255, 0.8)', fontStyle: 'italic' }}>
+                        {sessionType.description}
+                      </Text>
+                    )}
                     <Group gap="xs">
                       <IconLink size={14} color="var(--skedify-secondary)" />
                       <Text size="sm" style={{ fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.7)' }}>
@@ -298,6 +308,21 @@ const SessionTypeManagement: React.FC = () => {
                 { value: '120', label: '2 hours' }
               ]}
               {...form.getInputProps('duration_minutes')}
+            />
+            <TextInput
+              label="Description (Optional)"
+              placeholder="Brief description of this session type..."
+              size="md"
+              radius="sm"
+              styles={{
+                label: { fontWeight: 600, color: 'white', marginBottom: '8px' },
+                input: {
+                  background: 'rgba(255, 255, 255, 0.15)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  color: 'white'
+                }
+              }}
+              {...form.getInputProps('description')}
             />
             <Group justify="flex-end">
               <Button

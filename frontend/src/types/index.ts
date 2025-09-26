@@ -31,6 +31,7 @@ export interface SessionType {
   name: string;
   duration_minutes: number;
   unique_link: string;
+  description?: string;
   created_at: string;
 }
 

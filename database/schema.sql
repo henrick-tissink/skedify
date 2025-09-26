@@ -33,6 +33,7 @@ CREATE TABLE session_types (
     name VARCHAR(100) NOT NULL,
     duration_minutes INTEGER NOT NULL,
     unique_link UUID UNIQUE NOT NULL DEFAULT uuid_generate_v4(),
+    description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

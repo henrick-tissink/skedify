@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Title,
   Button,
@@ -13,14 +13,19 @@ import {
   Grid,
   Badge,
   LoadingOverlay,
-} from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { useDisclosure } from '@mantine/hooks';
-import { notifications } from '@mantine/notifications';
-import { IconPlus, IconEdit, IconTrash, IconCalendar } from '@tabler/icons-react';
-import { apiClient } from '@api/client';
-import type { Calendar, CalendarEvent } from '@types';
-import { AxiosError } from 'axios';
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
+import {
+  IconPlus,
+  IconEdit,
+  IconTrash,
+  IconCalendar,
+} from "@tabler/icons-react";
+import { apiClient } from "@api/client";
+import type { Calendar, CalendarEvent } from "@types";
+import { AxiosError } from "axios";
 
 interface CalendarForm {
   name: string;
@@ -30,18 +35,20 @@ interface CalendarForm {
 const CalendarManagement: React.FC = () => {
   const [calendars, setCalendars] = useState<Calendar[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCalendar, setSelectedCalendar] = useState<Calendar | null>(null);
+  const [selectedCalendar, setSelectedCalendar] = useState<Calendar | null>(
+    null
+  );
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [opened, { open, close }] = useDisclosure(false);
   const [editingCalendar, setEditingCalendar] = useState<Calendar | null>(null);
 
   const form = useForm<CalendarForm>({
     initialValues: {
-      name: '',
-      description: '',
+      name: "",
+      description: "",
     },
     validate: {
-      name: (value) => (value.length < 1 ? 'Name is required' : null),
+      name: (value) => (value.length < 1 ? "Name is required" : null),
     },
   });
 
@@ -51,17 +58,19 @@ const CalendarManagement: React.FC = () => {
 
   const fetchCalendars = async () => {
     try {
-      const response = await apiClient.get<{ calendars: Calendar[] }>('/calendars');
+      const response = await apiClient.get<{ calendars: Calendar[] }>(
+        "/calendars"
+      );
       setCalendars(response.data.calendars);
       if (response.data.calendars.length > 0 && !selectedCalendar) {
         setSelectedCalendar(response.data.calendars[0]);
         fetchEvents(response.data.calendars[0].id);
       }
-    } catch (error) {
+    } catch {
       notifications.show({
-        title: 'Error',
-        message: 'Failed to fetch calendars',
-        color: 'red',
+        title: "Error",
+        message: "Failed to fetch calendars",
+        color: "red",
       });
     } finally {
       setLoading(false);
@@ -70,13 +79,15 @@ const CalendarManagement: React.FC = () => {
 
   const fetchEvents = async (calendarId: number) => {
     try {
-      const response = await apiClient.get<{ events: CalendarEvent[] }>(`/calendars/${calendarId}/events`);
+      const response = await apiClient.get<{ events: CalendarEvent[] }>(
+        `/calendars/${calendarId}/events`
+      );
       setEvents(response.data.events);
-    } catch (error) {
+    } catch {
       notifications.show({
-        title: 'Error',
-        message: 'Failed to fetch events',
-        color: 'red',
+        title: "Error",
+        message: "Failed to fetch events",
+        color: "red",
       });
     }
   };
@@ -86,16 +97,16 @@ const CalendarManagement: React.FC = () => {
       if (editingCalendar) {
         await apiClient.put(`/calendars/${editingCalendar.id}`, values);
         notifications.show({
-          title: 'Success',
-          message: 'Calendar updated successfully',
-          color: 'green',
+          title: "Success",
+          message: "Calendar updated successfully",
+          color: "green",
         });
       } else {
-        await apiClient.post('/calendars', values);
+        await apiClient.post("/calendars", values);
         notifications.show({
-          title: 'Success',
-          message: 'Calendar created successfully',
-          color: 'green',
+          title: "Success",
+          message: "Calendar created successfully",
+          color: "green",
         });
       }
       fetchCalendars();
@@ -105,9 +116,9 @@ const CalendarManagement: React.FC = () => {
     } catch (error) {
       const axiosError = error as AxiosError<{ error: string }>;
       notifications.show({
-        title: 'Error',
-        message: axiosError.response?.data?.error || 'Failed to save calendar',
-        color: 'red',
+        title: "Error",
+        message: axiosError.response?.data?.error || "Failed to save calendar",
+        color: "red",
       });
     }
   };
@@ -116,7 +127,7 @@ const CalendarManagement: React.FC = () => {
     setEditingCalendar(calendar);
     form.setValues({
       name: calendar.name,
-      description: calendar.description || '',
+      description: calendar.description || "",
     });
     open();
   };
@@ -125,9 +136,9 @@ const CalendarManagement: React.FC = () => {
     try {
       await apiClient.delete(`/calendars/${calendar.id}`);
       notifications.show({
-        title: 'Success',
-        message: 'Calendar deleted successfully',
-        color: 'green',
+        title: "Success",
+        message: "Calendar deleted successfully",
+        color: "green",
       });
       fetchCalendars();
       if (selectedCalendar?.id === calendar.id) {
@@ -137,9 +148,10 @@ const CalendarManagement: React.FC = () => {
     } catch (error) {
       const axiosError = error as AxiosError<{ error: string }>;
       notifications.show({
-        title: 'Error',
-        message: axiosError.response?.data?.error || 'Failed to delete calendar',
-        color: 'red',
+        title: "Error",
+        message:
+          axiosError.response?.data?.error || "Failed to delete calendar",
+        color: "red",
       });
     }
   };
@@ -157,7 +169,9 @@ const CalendarManagement: React.FC = () => {
   return (
     <Stack>
       <Group justify="space-between" mb="xl">
-        <Title order={2} style={{ color: 'white', fontWeight: 700 }}>Calendar Management</Title>
+        <Title order={2} style={{ color: "white", fontWeight: 700 }}>
+          Calendar Management
+        </Title>
         <Button
           leftSection={<IconPlus size={16} />}
           onClick={openCreateModal}
@@ -171,7 +185,12 @@ const CalendarManagement: React.FC = () => {
 
       <Grid>
         <Grid.Col span={{ base: 12, sm: 4 }}>
-          <Title order={3} size="h4" mb="md" style={{ color: 'white', fontWeight: 600 }}>
+          <Title
+            order={3}
+            size="h4"
+            mb="md"
+            style={{ color: "white", fontWeight: 600 }}
+          >
             Your Calendars
           </Title>
           <Stack gap="xs">
@@ -181,16 +200,18 @@ const CalendarManagement: React.FC = () => {
                 padding="lg"
                 radius="md"
                 style={{
-                  cursor: 'pointer',
-                  background: selectedCalendar?.id === calendar.id
-                    ? 'rgba(78, 205, 196, 0.2)'
-                    : 'rgba(255, 255, 255, 0.1)',
-                  backdropFilter: 'blur(20px)',
-                  border: selectedCalendar?.id === calendar.id
-                    ? '2px solid rgba(78, 205, 196, 0.5)'
-                    : '1px solid rgba(255, 255, 255, 0.2)',
-                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
-                  transition: 'all 0.3s ease'
+                  cursor: "pointer",
+                  background:
+                    selectedCalendar?.id === calendar.id
+                      ? "rgba(78, 205, 196, 0.2)"
+                      : "rgba(255, 255, 255, 0.1)",
+                  backdropFilter: "blur(20px)",
+                  border:
+                    selectedCalendar?.id === calendar.id
+                      ? "2px solid rgba(78, 205, 196, 0.5)"
+                      : "1px solid rgba(255, 255, 255, 0.2)",
+                  boxShadow: "0 4px 16px rgba(0, 0, 0, 0.2)",
+                  transition: "all 0.3s ease",
                 }}
                 onClick={() => {
                   setSelectedCalendar(calendar);
@@ -199,9 +220,14 @@ const CalendarManagement: React.FC = () => {
               >
                 <Group justify="space-between">
                   <Stack gap={2}>
-                    <Text fw={600} style={{ color: 'white' }}>{calendar.name}</Text>
+                    <Text fw={600} style={{ color: "white" }}>
+                      {calendar.name}
+                    </Text>
                     {calendar.description && (
-                      <Text size="sm" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                      <Text
+                        size="sm"
+                        style={{ color: "rgba(255, 255, 255, 0.7)" }}
+                      >
                         {calendar.description}
                       </Text>
                     )}
@@ -236,7 +262,11 @@ const CalendarManagement: React.FC = () => {
         <Grid.Col span={{ base: 12, sm: 8 }}>
           {selectedCalendar ? (
             <Stack>
-              <Title order={3} size="h4" style={{ color: 'white', fontWeight: 600 }}>
+              <Title
+                order={3}
+                size="h4"
+                style={{ color: "white", fontWeight: 600 }}
+              >
                 {selectedCalendar.name} Events
               </Title>
               {events.length === 0 ? (
@@ -244,15 +274,17 @@ const CalendarManagement: React.FC = () => {
                   padding="xl"
                   radius="md"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)'
+                    background: "rgba(255, 255, 255, 0.1)",
+                    backdropFilter: "blur(20px)",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    boxShadow: "0 4px 16px rgba(0, 0, 0, 0.2)",
                   }}
                 >
                   <Stack align="center" py="xl">
                     <IconCalendar size={48} color="var(--skedify-secondary)" />
-                    <Text style={{ color: 'rgba(255, 255, 255, 0.7)' }}>No events in this calendar</Text>
+                    <Text style={{ color: "rgba(255, 255, 255, 0.7)" }}>
+                      No events in this calendar
+                    </Text>
                   </Stack>
                 </Card>
               ) : (
@@ -263,21 +295,29 @@ const CalendarManagement: React.FC = () => {
                       padding="md"
                       radius="md"
                       style={{
-                        background: 'rgba(255, 255, 255, 0.1)',
-                        backdropFilter: 'blur(20px)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)'
+                        background: "rgba(255, 255, 255, 0.1)",
+                        backdropFilter: "blur(20px)",
+                        border: "1px solid rgba(255, 255, 255, 0.2)",
+                        boxShadow: "0 4px 16px rgba(0, 0, 0, 0.2)",
                       }}
                     >
                       <Group justify="space-between">
                         <Stack gap={2}>
-                          <Text fw={600} style={{ color: 'white' }}>{event.title}</Text>
-                          <Text size="sm" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                            {new Date(event.start_time).toLocaleString()} -{' '}
+                          <Text fw={600} style={{ color: "white" }}>
+                            {event.title}
+                          </Text>
+                          <Text
+                            size="sm"
+                            style={{ color: "rgba(255, 255, 255, 0.7)" }}
+                          >
+                            {new Date(event.start_time).toLocaleString()} -{" "}
                             {new Date(event.end_time).toLocaleString()}
                           </Text>
                           {event.description && (
-                            <Text size="sm" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                            <Text
+                              size="sm"
+                              style={{ color: "rgba(255, 255, 255, 0.6)" }}
+                            >
                               {event.description}
                             </Text>
                           )}
@@ -298,15 +338,17 @@ const CalendarManagement: React.FC = () => {
               padding="xl"
               radius="md"
               style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)'
+                background: "rgba(255, 255, 255, 0.1)",
+                backdropFilter: "blur(20px)",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                boxShadow: "0 4px 16px rgba(0, 0, 0, 0.2)",
               }}
             >
               <Stack align="center" py="xl">
                 <IconCalendar size={48} color="var(--skedify-accent)" />
-                <Text style={{ color: 'rgba(255, 255, 255, 0.7)' }}>Select a calendar to view events</Text>
+                <Text style={{ color: "rgba(255, 255, 255, 0.7)" }}>
+                  Select a calendar to view events
+                </Text>
               </Stack>
             </Card>
           )}
@@ -316,22 +358,22 @@ const CalendarManagement: React.FC = () => {
       <Modal
         opened={opened}
         onClose={close}
-        title={editingCalendar ? 'Edit Calendar' : 'Create Calendar'}
+        title={editingCalendar ? "Edit Calendar" : "Create Calendar"}
         radius="md"
         styles={{
           content: {
-            background: 'rgba(20, 20, 35, 0.95)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
+            background: "rgba(20, 20, 35, 0.95)",
+            backdropFilter: "blur(20px)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
           },
           header: {
-            background: 'transparent',
+            background: "transparent",
           },
           title: {
-            color: 'white',
+            color: "white",
             fontWeight: 700,
-            fontSize: '1.2rem'
-          }
+            fontSize: "1.2rem",
+          },
         }}
       >
         <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -343,14 +385,14 @@ const CalendarManagement: React.FC = () => {
               size="md"
               radius="sm"
               styles={{
-                label: { fontWeight: 600, color: 'white', marginBottom: '8px' },
+                label: { fontWeight: 600, color: "white", marginBottom: "8px" },
                 input: {
-                  background: 'rgba(255, 255, 255, 0.15)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                  color: 'white'
-                }
+                  background: "rgba(255, 255, 255, 0.15)",
+                  border: "1px solid rgba(255, 255, 255, 0.3)",
+                  color: "white",
+                },
               }}
-              {...form.getInputProps('name')}
+              {...form.getInputProps("name")}
             />
             <Textarea
               label="Description"
@@ -358,14 +400,14 @@ const CalendarManagement: React.FC = () => {
               size="md"
               radius="sm"
               styles={{
-                label: { fontWeight: 600, color: 'white', marginBottom: '8px' },
+                label: { fontWeight: 600, color: "white", marginBottom: "8px" },
                 input: {
-                  background: 'rgba(255, 255, 255, 0.15)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                  color: 'white'
-                }
+                  background: "rgba(255, 255, 255, 0.15)",
+                  border: "1px solid rgba(255, 255, 255, 0.3)",
+                  color: "white",
+                },
               }}
-              {...form.getInputProps('description')}
+              {...form.getInputProps("description")}
             />
             <Group justify="flex-end">
               <Button
@@ -374,7 +416,7 @@ const CalendarManagement: React.FC = () => {
                 radius="sm"
                 size="md"
               >
-                {editingCalendar ? 'Update' : 'Create'}
+                {editingCalendar ? "Update" : "Create"}
               </Button>
             </Group>
           </Stack>

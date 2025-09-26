@@ -126,9 +126,18 @@ const BookingManagement: React.FC = () => {
             <Text size="sm" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
               {formatDateTime(booking.start_time)}
             </Text>
-            <Text size="sm" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-              Contact: {booking.booked_by_email || booking.booked_by_phone}
-            </Text>
+            <Stack gap={2}>
+              {booking.booked_by_email && (
+                <Text size="sm" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                  Email: <a href={`mailto:${booking.booked_by_email}`} style={{ color: 'var(--skedify-accent)', textDecoration: 'none' }}>{booking.booked_by_email}</a>
+                </Text>
+              )}
+              {booking.booked_by_phone && (
+                <Text size="sm" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                  Phone: <a href={`tel:${booking.booked_by_phone}`} style={{ color: 'var(--skedify-accent)', textDecoration: 'none' }}>{booking.booked_by_phone}</a>
+                </Text>
+              )}
+            </Stack>
           </Stack>
           
           {booking.status === 'pending' && (
