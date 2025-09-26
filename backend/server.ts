@@ -54,5 +54,5 @@ app.use(sessionsRouter.allowedMethods());
 app.use(bookingsRouter.routes());
 app.use(bookingsRouter.allowedMethods());
 
-console.log(`🚀 Server running on http://localhost:${PORT}`);
-await app.listen({ port: PORT });
+console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
+await app.listen({ port: PORT, hostname: "0.0.0.0" });
