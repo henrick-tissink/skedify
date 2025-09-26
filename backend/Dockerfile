@@ -1,9 +1,9 @@
-FROM denoland/deno:1.46.3
+FROM denoland/deno:latest
 
 WORKDIR /app
 
-COPY deno.json deno.lock ./
-RUN deno cache --lock=deno.lock deno.json
+COPY deno.json ./
+RUN deno cache deno.json
 
 COPY . .
 RUN deno cache server.ts
