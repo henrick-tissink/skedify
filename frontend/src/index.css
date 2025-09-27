@@ -50,12 +50,17 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+  background: #1a1a2e;
+}
+
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
   background: #1a1a2e;
-  background: linear-gradient(
+  background-image: linear-gradient(
     135deg,
     #1a1a2e 0%,
     #16213e 25%,
@@ -64,13 +69,24 @@ body {
     #1a1a2e 100%
   );
   background-attachment: fixed;
+  background-size: 100% 100vh;
   position: relative;
 }
 
-/* iOS Safari specific fixes */
+/* iOS Safari specific fixes - force gradient to show */
 @supports (-webkit-touch-callout: none) {
   body {
-    background-attachment: scroll;
+    background-attachment: initial;
+    background-image: linear-gradient(
+      135deg,
+      #1a1a2e 0%,
+      #16213e 25%,
+      #0f3460 50%,
+      #16213e 75%,
+      #1a1a2e 100%
+    ) !important;
+    background-size: 100% 100vh;
+    min-height: 100vh;
   }
 }
 
