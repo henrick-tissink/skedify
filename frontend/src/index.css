@@ -1,7 +1,7 @@
 /* Mobile-first responsive design */
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -13,19 +13,31 @@
   -webkit-text-size-adjust: 100%;
 
   /* Vibrant color palette */
-  --skedify-primary: #FF6B6B;
-  --skedify-secondary: #4ECDC4;
-  --skedify-accent: #45B7D1;
-  --skedify-success: #96CEB4;
-  --skedify-warning: #FECA57;
-  --skedify-purple: #BF5AF2;
-  --skedify-pink: #F368E0;
+  --skedify-primary: #ff6b6b;
+  --skedify-secondary: #4ecdc4;
+  --skedify-accent: #45b7d1;
+  --skedify-success: #96ceb4;
+  --skedify-warning: #feca57;
+  --skedify-purple: #bf5af2;
+  --skedify-pink: #f368e0;
 
   /* Gradients */
-  --skedify-gradient-main: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 25%, #45B7D1 50%, #96CEB4 75%, #FECA57 100%);
-  --skedify-gradient-purple: linear-gradient(135deg, #FF9FF3 0%, #F368E0 50%, #BF5AF2 100%);
-  --skedify-gradient-ocean: linear-gradient(135deg, #4ECDC4 0%, #45B7D1 100%);
-  --skedify-gradient-sunset: linear-gradient(135deg, #FF6B6B 0%, #FECA57 100%);
+  --skedify-gradient-main: linear-gradient(
+    135deg,
+    #ff6b6b 0%,
+    #4ecdc4 25%,
+    #45b7d1 50%,
+    #96ceb4 75%,
+    #feca57 100%
+  );
+  --skedify-gradient-purple: linear-gradient(
+    135deg,
+    #ff9ff3 0%,
+    #f368e0 50%,
+    #bf5af2 100%
+  );
+  --skedify-gradient-ocean: linear-gradient(135deg, #4ecdc4 0%, #45b7d1 100%);
+  --skedify-gradient-sunset: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
 
   /* Enhanced shadows with color */
   --skedify-shadow-sm: 0 2px 8px rgba(255, 107, 107, 0.15);
@@ -42,29 +54,58 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #16213e 75%, #1a1a2e 100%);
+  background: #1a1a2e;
+  background: linear-gradient(
+    135deg,
+    #1a1a2e 0%,
+    #16213e 25%,
+    #0f3460 50%,
+    #16213e 75%,
+    #1a1a2e 100%
+  );
+  background-attachment: fixed;
   position: relative;
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 /* Animated background overlay */
 body::before {
-  content: '';
-  position: fixed;
+  content: "";
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(255, 107, 107, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 60% 40%, rgba(191, 90, 242, 0.05) 0%, transparent 50%);
+  min-height: 100vh;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 107, 107, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(78, 205, 196, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 60% 40%,
+      rgba(191, 90, 242, 0.05) 0%,
+      transparent 50%
+    );
   animation: floatingBubbles 20s ease-in-out infinite;
   pointer-events: none;
   z-index: -1;
 }
 
 @keyframes floatingBubbles {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
   }
   33% {
@@ -81,7 +122,11 @@ body::before {
 }
 
 /* Mobile touch targets */
-button, [role="button"], input, select, textarea {
+button,
+[role="button"],
+input,
+select,
+textarea {
   min-height: 44px;
   min-width: 44px;
 }
@@ -111,7 +156,8 @@ textarea:focus {
 }
 
 /* Prevent horizontal scroll */
-html, body {
+html,
+body {
   overflow-x: hidden;
 }
 
@@ -186,13 +232,21 @@ html {
 }
 
 .skedify-alert-success {
-  background: linear-gradient(135deg, rgba(150, 206, 180, 0.2), rgba(78, 205, 196, 0.2)) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(150, 206, 180, 0.2),
+    rgba(78, 205, 196, 0.2)
+  ) !important;
   border: 1px solid var(--skedify-success) !important;
   color: #2d5a4a !important;
 }
 
 .skedify-alert-info {
-  background: linear-gradient(135deg, rgba(69, 183, 209, 0.2), rgba(78, 205, 196, 0.2)) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(69, 183, 209, 0.2),
+    rgba(78, 205, 196, 0.2)
+  ) !important;
   border: 1px solid var(--skedify-accent) !important;
   color: #2d4a5a !important;
 }
@@ -212,7 +266,8 @@ html {
 }
 
 @keyframes logoFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
